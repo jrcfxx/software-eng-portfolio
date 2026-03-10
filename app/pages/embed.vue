@@ -20,6 +20,6 @@ const { portfolio } = usePortfolioContent()
         <PortfolioNav compact />
       </div>
     </header>
-    <PortfolioPage embedded />
+    <PortfolioPage />
   </div>
 </template>

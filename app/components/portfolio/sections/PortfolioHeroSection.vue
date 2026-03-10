@@ -1,12 +1,5 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
-  embedded?: boolean
-}>(), {
-  embedded: false
-})
-
 const { portfolio, ui } = usePortfolioContent()
-const { heroSplineUrl } = usePortfolioScene()
 </script>
 
 <template>
@@ -48,23 +41,17 @@ const { heroSplineUrl } = usePortfolioScene()
         <div class="relative">
           <div class="aspect-square max-w-md mx-auto relative">
             <div class="absolute inset-0 rounded-lg border-2 border-[var(--portfolio-accent)] transform rotate-[-2deg] scale-[0.95]" />
-            <div class="absolute inset-0 overflow-hidden rounded-lg border border-[var(--portfolio-border)] bg-[var(--portfolio-bg-elevated)]">
-              <iframe
-                v-if="!props.embedded && heroSplineUrl"
-                :src="heroSplineUrl"
-                title="Cubo 3D"
-                loading="lazy"
-                class="w-full h-full"
-                frameborder="0"
-              />
-              <div
-                v-else
-                class="flex items-center justify-center w-full h-full"
-              >
-                <UIcon
-                  name="i-lucide-user"
-                  class="w-24 h-24 text-[var(--portfolio-text-muted)]"
-                />
+            <div class="absolute inset-0 overflow-hidden rounded-lg border border-[var(--portfolio-border)] bg-[var(--portfolio-bg-elevated)] flex flex-col items-center justify-center gap-4 p-8 text-center">
+              <div class="w-24 h-24 rounded-full border border-[var(--portfolio-accent)] flex items-center justify-center text-2xl font-bold text-[var(--portfolio-accent)] bg-[var(--portfolio-bg-soft)]">
+                JF
+              </div>
+              <div class="space-y-2">
+                <p class="text-base font-semibold text-[var(--portfolio-text)]">
+                  {{ portfolio.shortName }}
+                </p>
+                <p class="text-sm text-[var(--portfolio-text-muted)]">
+                  {{ portfolio.heroTagline }}
+                </p>
               </div>
             </div>
             <div class="absolute -top-2 -right-2 w-8 h-8 dot-pattern rounded" />

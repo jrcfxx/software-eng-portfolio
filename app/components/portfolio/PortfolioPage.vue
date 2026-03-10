@@ -1,12 +1,6 @@
-<script setup lang="ts">
-defineProps<{
-  embedded?: boolean
-}>()
-</script>
-
 <template>
   <div>
-    <PortfolioHeroSection :embedded="embedded" />
+    <PortfolioHeroSection />
     <PortfolioProjectsSection />
     <PortfolioSkillsSection />
     <PortfolioAboutSection />
