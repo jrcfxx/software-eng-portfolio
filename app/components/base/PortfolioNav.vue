@@ -1,18 +1,9 @@
-<template>
-  <nav class="flex items-center gap-6">
-    <a
-      v-for="item in navItems"
-      :key="item.id"
-      :href="`#${item.id}`"
-      class="text-sm font-medium text-muted hover:text-foreground transition-colors"
-    >
-      {{ item.label }}
-    </a>
-  </nav>
-</template>
-
 <script setup lang="ts">
-const { ui } = usePortfolioLocale()
+const { ui } = usePortfolioContent()
+
+defineProps<{
+  compact?: boolean
+}>()
 
 const navItems = computed(() => [
   { id: 'home', label: ui.value.nav.home },
@@ -22,3 +13,17 @@ const navItems = computed(() => [
   { id: 'contacts', label: ui.value.nav.contacts }
 ])
 </script>
+
+<template>
+  <nav class="flex flex-wrap items-center gap-4 sm:gap-6">
+    <a
+      v-for="item in navItems"
+      :key="item.id"
+      :href="`#${item.id}`"
+      class="text-sm transition-colors"
+      :class="compact ? 'text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)]' : 'text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)]'"
+    >
+      {{ item.label }}
+    </a>
+  </nav>
+</template>

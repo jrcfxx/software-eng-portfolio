@@ -1,6 +1,8 @@
 name: ci
 
-on: push
+on:
+  push:
+  pull_request:
 
 jobs:
   ci:
@@ -32,3 +34,6 @@ jobs:
 
       - name: Typecheck
         run: pnpm run typecheck
+
+      - name: Build
+        run: pnpm run build

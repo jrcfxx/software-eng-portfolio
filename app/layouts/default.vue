@@ -1,13 +1,5 @@
 <script setup lang="ts">
-const { locale, setLocale, portfolio, ui } = usePortfolioLocale()
-
-const navItems = computed(() => [
-  { id: 'home', label: ui.value.nav.home },
-  { id: 'works', label: ui.value.nav.works },
-  { id: 'about-me', label: ui.value.nav.aboutMe },
-  { id: 'experiences', label: ui.value.nav.experiences },
-  { id: 'contacts', label: ui.value.nav.contacts }
-])
+const { portfolio, ui } = usePortfolioContent()
 </script>
 
 <template>
@@ -17,42 +9,7 @@ const navItems = computed(() => [
     </ClientOnly>
 
     <aside class="fixed left-0 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-4 pl-3 md:pl-4">
-      <a
-        :href="portfolio.links.github"
-        target="_blank"
-        rel="noopener"
-        class="w-10 h-10 rounded-full border border-[var(--portfolio-border)] flex items-center justify-center text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)] hover:border-[var(--portfolio-accent)] transition-colors"
-        aria-label="GitHub"
-      >
-        <UIcon
-          name="i-simple-icons-github"
-          class="w-5 h-5"
-        />
-      </a>
-      <a
-        :href="portfolio.links.linkedin"
-        target="_blank"
-        rel="noopener"
-        class="w-10 h-10 rounded-full border border-[var(--portfolio-border)] flex items-center justify-center text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)] hover:border-[var(--portfolio-accent)] transition-colors"
-        aria-label="LinkedIn"
-      >
-        <UIcon
-          name="i-simple-icons-linkedin"
-          class="w-5 h-5"
-        />
-      </a>
-      <a
-        :href="portfolio.links.whatsapp"
-        target="_blank"
-        rel="noopener"
-        class="w-10 h-10 rounded-full border border-[var(--portfolio-border)] flex items-center justify-center text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)] hover:border-[var(--portfolio-accent)] transition-colors"
-        aria-label="WhatsApp"
-      >
-        <UIcon
-          name="i-simple-icons-whatsapp"
-          class="w-5 h-5"
-        />
-      </a>
+      <SocialLinks vertical />
       <a
         href="#contacts"
         class="w-10 h-10 rounded-full border border-[var(--portfolio-border)] flex items-center justify-center text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)] hover:border-[var(--portfolio-accent)] transition-colors"
@@ -72,41 +29,18 @@ const navItems = computed(() => [
             to="/"
             class="text-lg font-bold text-[var(--portfolio-text)] hover:text-[var(--portfolio-accent)] transition-colors"
           >
-            {{ portfolio.shortName }}
+            <AppLogo />
           </NuxtLink>
-          <nav class="flex flex-wrap items-center gap-4 sm:gap-6">
-            <a
-              v-for="item in navItems"
-              :key="item.id"
-              :href="`#${item.id}`"
-              class="text-sm text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)] transition-colors"
-            >
-              {{ item.label }}
-            </a>
+          <div class="flex flex-wrap items-center gap-4 sm:gap-6">
+            <PortfolioNav />
             <NuxtLink
               to="/experience"
               class="text-sm text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)] transition-colors"
             >
-              3D
+              {{ ui.portfolio3d }}
             </NuxtLink>
-            <div class="flex items-center gap-1 border-l border-[var(--portfolio-border)] pl-4">
-              <button
-                type="button"
-                :class="locale === 'pt-BR' ? 'text-[var(--portfolio-accent)] font-semibold' : 'text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)]'"
-                @click="setLocale('pt-BR')"
-              >
-                PT
-              </button>
-              <span class="text-[var(--portfolio-text-muted)]">|</span>
-              <button
-                type="button"
-                :class="locale === 'en' ? 'text-[var(--portfolio-accent)] font-semibold' : 'text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)]'"
-                @click="setLocale('en')"
-              >
-                EN
-              </button>
-            </div>
-          </nav>
+            <LocaleSwitcher />
+          </div>
         </div>
       </header>
 
@@ -136,56 +70,7 @@ const navItems = computed(() => [
               <p class="text-sm font-semibold text-[var(--portfolio-text-muted)] mb-2">
                 {{ ui.media }}
               </p>
-              <div class="flex gap-3">
-                <a
-                  :href="portfolio.links.github"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)]"
-                  aria-label="GitHub"
-                >
-                  <UIcon
-                    name="i-simple-icons-github"
-                    class="w-5 h-5"
-                  />
-                </a>
-                <a
-                  :href="portfolio.links.linkedin"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)]"
-                  aria-label="LinkedIn"
-                >
-                  <UIcon
-                    name="i-simple-icons-linkedin"
-                    class="w-5 h-5"
-                  />
-                </a>
-                <a
-                  :href="portfolio.links.whatsapp"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)]"
-                  aria-label="WhatsApp"
-                >
-                  <UIcon
-                    name="i-simple-icons-whatsapp"
-                    class="w-5 h-5"
-                  />
-                </a>
-                <a
-                  :href="portfolio.links.portfolioRepo"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-[var(--portfolio-text-muted)] hover:text-[var(--portfolio-accent)]"
-                  aria-label="Repositório do portfólio"
-                >
-                  <UIcon
-                    name="i-lucide-folder-git-2"
-                    class="w-5 h-5"
-                  />
-                </a>
-              </div>
+              <SocialLinks />
             </div>
           </div>
           <p class="text-center text-sm text-[var(--portfolio-text-muted)]">

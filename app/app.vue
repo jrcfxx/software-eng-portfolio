@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { locale, portfolio } = usePortfolioLocale()
+const { locale } = usePortfolioLocale()
+const { portfolio } = usePortfolioContent()
 
 const title = computed(() => `${portfolio.value.name} | ${portfolio.value.role}`)
 const description = computed(() => (

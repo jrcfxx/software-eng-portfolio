@@ -23,6 +23,8 @@ logs
 .env.*
 !.env.example
 
-# Modelos 3D grandes (GitHub limita a 100MB). Use CDN ou hospede externamente.
-*.glb
-*.gltf
+# Assets 3D locais são opcionais.
+# Em produção, prefira CDN/storage e configure NUXT_PUBLIC_GLB_MODEL_URL.
+public/models/*.glb
+public/models/*.gltf
+!public/models/.gitkeep

@@ -2,5 +2,5 @@
 </script>
 
 <template>
-  <PortfolioContent />
+  <PortfolioPage />
 </template>

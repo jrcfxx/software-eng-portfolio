@@ -5,25 +5,15 @@
  */
 definePageMeta({ layout: 'embed' })
 
-const { ui } = usePortfolioLocale()
-
-const config = useRuntimeConfig().public as {
-  glbModelUrl?: string
-  screenObjectName?: string
-  screenFlip?: boolean
-  screenNudge?: number
-}
-
-const modelUrl = computed(() => config.glbModelUrl || '/models/computador-cenario.glb')
-const screenObjectName = computed(() => config.screenObjectName || 'screen')
-const screenFlip = computed(() => config.screenFlip ?? false)
-const screenNudge = computed(() => config.screenNudge ?? -0.02)
+const { ui } = usePortfolioContent()
+const { embedUrl, modelUrl, screenFlip, screenNudge, screenObjectName } = usePortfolioScene()
 </script>
 
 <template>
   <div class="experience-page">
     <ClientOnly>
       <Portfolio3DScene
+        :embed-url="embedUrl"
         :model-url="modelUrl"
         :screen-object-name="screenObjectName"
         :screen-flip="screenFlip"
@@ -34,7 +24,7 @@ const screenNudge = computed(() => config.screenNudge ?? -0.02)
       to="/"
       class="experience-link"
     >
-      ← {{ ui.nav.home }}
+      ← {{ ui.backToHome }}
     </NuxtLink>
   </div>
 </template>

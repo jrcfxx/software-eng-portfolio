@@ -3,8 +3,7 @@
  * Spline 3D background com linhas decorativas.
  * Para usar sua própria cena: crie no Spline (spline.design), exporte como "Code" e defina NUXT_PUBLIC_SPLINE_SCENE_URL no .env
  */
-const config = useRuntimeConfig().public
-const sceneUrl = (config as { splineSceneUrl?: string }).splineSceneUrl || 'https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode'
+const { heroSplineUrl } = usePortfolioScene()
 
 withDefaults(
   defineProps<{
@@ -19,12 +18,12 @@ const isLoaded = ref(false)
 
 onMounted(async () => {
   const canvas = canvasRef.value
-  if (!canvas) return
+  if (!canvas || !heroSplineUrl.value) return
 
   try {
     const { Application } = await import('@splinetool/runtime')
     const app = new Application(canvas)
-    await app.load(sceneUrl)
+    await app.load(heroSplineUrl.value)
     isLoaded.value = true
   } catch (e) {
     console.warn('[SplineBackground] Could not load scene:', e)

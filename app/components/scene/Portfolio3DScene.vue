@@ -53,6 +53,18 @@ const cleanupState = ref<{
   cssDomElement: HTMLElement
 } | null>(null)
 
+function collectNamedObjects(root: { traverse: (callback: (obj: { name?: string }) => void) => void }) {
+  const names: string[] = []
+
+  root.traverse((obj) => {
+    if (obj.name) {
+      names.push(obj.name)
+    }
+  })
+
+  return names
+}
+
 onUnmounted(() => {
   const s = cleanupState.value
   if (s) {
@@ -163,14 +175,8 @@ onMounted(async () => {
     const computer = resolvedComputerMesh as Mesh | null
 
     if (!screen) {
-      const names: string[] = []
-      model.traverse((obj) => {
-        if (obj.name) {
-          names.push(obj.name)
-        }
-      })
+      const names = collectNamedObjects(model)
       errorMessage.value = `Objeto "${props.screenObjectName}" não encontrado. Objetos no modelo: ${names.join(', ') || '(nenhum nomeado)'}`
-      console.warn('[Portfolio3DScene] Objetos disponíveis:', names)
     } else {
       screen.updateWorldMatrix(true, false)
       if (!screen.geometry.boundingBox) {
@@ -302,12 +308,6 @@ onMounted(async () => {
         targetProgress: 0
       }
 
-      console.log('[Portfolio3DScene] Tela selecionada:', {
-        name: screen.name || '(sem nome)',
-        width,
-        height,
-        depth
-      })
       camera.position.copy(cameraStartPosition)
       controls.target.copy(targetStartPosition)
       controls.update()
@@ -441,7 +441,7 @@ onMounted(async () => {
     console.error('[Portfolio3DScene]', e)
     const msg = e instanceof Error ? e.message : String(e)
     if (msg.includes('404') || msg.includes('fetch')) {
-      errorMessage.value = 'Modelo GLB não encontrado. Coloque seu .glb em public/models/ (ex: computador-cenario.glb)'
+      errorMessage.value = 'Modelo GLB não encontrado. Adicione o arquivo local em public/models/ ou configure NUXT_PUBLIC_GLB_MODEL_URL.'
     } else {
       errorMessage.value = msg
     }

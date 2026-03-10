@@ -1,4 +1,4 @@
-import { getPortfolio, getUi, type Locale } from '~/data/portfolio'
+import type { Locale } from '~/data/portfolio'
 
 const LOCALE_KEY = 'portfolio-locale'
 
@@ -15,13 +15,7 @@ export function usePortfolioLocale() {
   const setLocale = (value: Locale) => {
     locale.value = value
     cookie.value = value
-    if (import.meta.client) {
-      document.documentElement.lang = value === 'pt-BR' ? 'pt-BR' : 'en'
-    }
   }
 
-  const portfolio = computed(() => getPortfolio(locale.value))
-  const ui = computed(() => getUi(locale.value))
-
-  return { locale, setLocale, portfolio, ui }
+  return { locale, setLocale }
 }
